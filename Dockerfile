@@ -11,7 +11,3 @@ ADD https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/${HUGO_TARB
 RUN tar xzf /usr/local/${HUGO_TARBALL_NAME}.tar.gz -C /usr/local/ \
 	&& mv /usr/local/${HUGO_BINARY}/${HUGO_BINARY} /usr/local/bin/hugo \
 	&& rm /usr/local/${HUGO_TARBALL_NAME}.tar.gz
-
-EXPOSE 1313
-
-ENTRYPOINT ["hugo"]
