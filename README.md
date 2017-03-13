@@ -1,2 +1,2 @@
-# firebase-cli
-docker image running firebase-cli
+# hugo-and-firebase
+docker image that ships with hugo and firebase-cli
