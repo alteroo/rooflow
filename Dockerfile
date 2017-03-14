@@ -12,7 +12,7 @@ ENV HUGO_BINARY hugo_${HUGO_VERSION}_linux_amd64
 RUN npm install -g firebase-tools \
     && apk add --update curl && \
     && rm -rf /var/cache/apk/* \
-    && curl -SL /usr/local/${HUGO_TARBALL_NAME}.tar.gz
+    && curl -SL /usr/local/${HUGO_TARBALL_NAME}.tar.gz \
     && tar xzf /usr/local/${HUGO_TARBALL_NAME}.tar.gz \
 	&& mv ${HUGO_BINARY}/${HUGO_BINARY} /usr/local/bin/hugo \
 	&& rm ${HUGO_TARBALL_NAME}.tar.gz
