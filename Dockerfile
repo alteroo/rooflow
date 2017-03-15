@@ -11,6 +11,7 @@ ENV HUGO_BINARY hugo_${HUGO_VERSION}_linux_amd64
 # according to https://semaphoreci.com/blog/2016/12/13/lightweight-docker-images-in-5-steps.html
 RUN npm install -g firebase-tools \
     && apk add --update curl \
+    && apk add tar \
     && rm -rf /var/cache/apk/* \
     && curl -O https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/${HUGO_TARBALL_NAME}.tar.gz \
     && tar xzf ${HUGO_TARBALL_NAME}.tar.gz \
