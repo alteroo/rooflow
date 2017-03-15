@@ -10,7 +10,7 @@ ENV HUGO_BINARY hugo_${HUGO_VERSION}_linux_amd64
 # install firebase-tools and hugo in one command, makes for a smaller image
 # according to https://semaphoreci.com/blog/2016/12/13/lightweight-docker-images-in-5-steps.html
 RUN npm install -g firebase-tools \
-    && apk add --update curl && \
+    && apk add --update curl \
     && rm -rf /var/cache/apk/* \
     && curl -SL /usr/local/${HUGO_TARBALL_NAME}.tar.gz \
     && tar xzf /usr/local/${HUGO_TARBALL_NAME}.tar.gz \
