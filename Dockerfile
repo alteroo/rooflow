@@ -14,5 +14,5 @@ RUN npm install -g firebase-tools \
     && rm -rf /var/cache/apk/* \
     && curl -SL https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/${HUGO_TARBALL_NAME}.tar.gz \
     && tar xzf ${HUGO_TARBALL_NAME}.tar.gz \
-	&& mv ${HUGO_BINARY}/${HUGO_BINARY} /usr/local/bin/hugo \
-	&& rm ${HUGO_TARBALL_NAME}.tar.gz
+    && mv ${HUGO_BINARY}/${HUGO_BINARY} /usr/local/bin/hugo \
+    && rm ${HUGO_TARBALL_NAME}.tar.gz
