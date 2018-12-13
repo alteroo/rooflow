@@ -1,4 +1,4 @@
-FROM node:6.9.2-alpine
+FROM node:8.14.0-alpine
 
 ENV HUGO_VERSION 0.19
 ENV HUGO_TARBALL_NAME hugo_${HUGO_VERSION}_Linux-64bit
