@@ -1,4 +1,4 @@
-FROM buildkite/docker-puppeteer:v1.11.0
+FROM buildkite/docker-puppeteer:latest
 
 COPY . /app/
 WORKDIR app
