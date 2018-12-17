@@ -38,11 +38,11 @@ async function run() {
   // Log in with credentials
   const [gotologinpage] = await Promise.all([
       page.waitForNavigation(), 
-      page.click(USERNAME_)
-      page.keyboard.type(CREDS.username)
-      page.click(PASSWORD_)
-      page.keyboard.type(CREDS.password)
-      page.click(SUBMIT_)
+      page.click(USERNAME_),
+      page.keyboard.type(CREDS.username),
+      page.click(PASSWORD_),
+      page.keyboard.type(CREDS.password),
+      page.click(SUBMIT_),
             ]);
   /* await page.click(USERNAME_)
   await page.keyboard.type(CREDS.username)
