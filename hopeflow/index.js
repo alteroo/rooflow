@@ -36,12 +36,21 @@ async function run() {
   await page.screenshot({ path: 'screenshots/loginpage.png' });
 
   // Log in with credentials
-  await page.click(USERNAME_)
+  const [gotologinpage] = await Promise.all([
+      page.waitForNavigation(), 
+      page.click(USERNAME_)
+      page.keyboard.type(CREDS.username)
+      page.click(PASSWORD_)
+      page.keyboard.type(CREDS.password)
+      page.click(SUBMIT_)
+            ]);
+  /* await page.click(USERNAME_)
   await page.keyboard.type(CREDS.username)
   await page.click(PASSWORD_)
   await page.keyboard.type(CREDS.password)
   await page.click(SUBMIT_)
   await page.waitForNavigation() 
+*/
 
   await page.screenshot({ path: 'screenshots/loggedinpage.png' });
 
