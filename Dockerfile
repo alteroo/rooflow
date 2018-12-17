@@ -1,7 +1,7 @@
 FROM alekzonder/puppeteer:latest
 
-COPY . /app/
-WORKDIR app
+COPY --chown=pptruser:pptruser . ./app
+WORKDIR /app
 
 RUN cd /app/hopeflow \
     && npm install 
