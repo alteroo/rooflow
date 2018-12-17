@@ -37,6 +37,8 @@ async function run() {
 
   // Log in with credentials
   const [logintosite] = await Promise.all([
+      // waith an extra 30 seconds before waiting for navigation
+      page.waitFor(30000),
       page.waitForNavigation(), 
       page.click(USERNAME_),
       page.keyboard.type(CREDS.username),
