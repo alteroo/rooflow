@@ -21,9 +21,7 @@ if (!fs.existsSync('screenshots')){
 
 async function run() {
   const browser = await puppeteer.launch({
-                       executablePath: '/usr/bin/chromium-browser',
-                       args: ['--no-sandbox', '--disable-setuid-sandbox',
-                                '--disable-dev-shm-usage']
+                       args: ['--no-sandbox', '--disable-setuid-sandbox']
                       });
   const page = await browser.newPage();
 
