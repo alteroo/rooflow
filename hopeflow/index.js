@@ -33,7 +33,7 @@ async function run() {
   //    page.click(LOGIN_BUTTON_), 
   //          ]);
 
-  await page.screenshot({ path: 'screenshots/loginpage.png' });
+  // await page.screenshot({ path: 'screenshots/loginpage.png' });
 
   // Log in with credentials
   const [logintosite] = await Promise.all([
