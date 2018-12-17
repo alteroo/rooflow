@@ -27,7 +27,12 @@ RUN yarn add puppeteer@0.11.0
 RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
     && mkdir -p /home/pptruser/Downloads \
     && chown -R pptruser:pptruser /home/pptruser \
-    && chown -R pptruser:pptruser /app
+    && chown -R pptruser:pptruser /app \
+    && apk add --update ca-certificates wget \
+    && update-ca-certificates \
+    && rm -rf /var/cache/apk/* \
+    && cd /app/hopeflow \
+    && npm install 
 
 # Run user as non privileged.
 USER pptruser
@@ -37,8 +42,3 @@ EXPOSE 8080
 ENTRYPOINT ["dumb-init", "--"]
 CMD ["yarn", "start"]
 
-RUN cd hopeflow \
-    && apk add --update ca-certificates wget \
-    && update-ca-certificates \
-    && rm -rf /var/cache/apk/* \
-    && npm install 
