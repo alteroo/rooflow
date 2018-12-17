@@ -1,4 +1,6 @@
 const fs = require('fs');
+const mkdirp = require('mkdirp');
+const getDirName = require('path').dirname;
 const request = require('request');
 path = require('path');
 
@@ -12,6 +14,18 @@ String.prototype.format = function () {
   });
 };
 
+function writeFile(file_location, content) {
+              mkdirp(getDirName(file_location), function (err) {
+                  if (err) return err;
+                   fs.writeFile(file_location, content, 
+                     function(err, content){
+                       if (err) console.log(err);
+                        console.log("Successfully Written to File.");
+                      });
+                });
+            }
+
+
 // Begin processing of the json file
 fs.readFile('site.json', 'utf8', function (err, data) {
   if (err) throw err;
@@ -24,46 +38,26 @@ fs.readFile('site.json', 'utf8', function (err, data) {
            request(assets[key].cdnUrl, {encoding: null}, function (error, response, body) {
               console.log('error:', error); // Print the error if one occurred
               console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-              const filename = path.basename(assets[key].cdnUrl).replace('%20',' ')
-              fs.writeFile('public/images/{}'.format(filename), body, function(err, body){
-                if (err) console.log(err);
-                  console.log("Successfully Written to File.");
-                });
-            }));
+              const filename = path.basename(assets[key].cdnUrl).replace('%20',' ');
+              const file_location = 'public/images/{}'.format(filename);
+              writeFile(file_location, body);
+            })
+            );
 
   // replace webflow hosted image paths with relative images
   const result = obj.pages[0].html;
-  const replace = result.replace(/https\:\/\/uploads-ssl\.webflow\.com\/\w+\//g, "images/");
-  fs.writeFile("public/index.html", replace, function(err) {
-    if(err) {
-        return console.log(err);
-    }
-    console.log("The file was saved!");
-   }); 
+  const content = result.replace(/https\:\/\/uploads-ssl\.webflow\.com\/\w+\//g, "images/");
+
+  file_location = 'public/index.html'
+  writeFile(file_location, content);
 
   // write the css
   // replace webflow hosted image paths with relative images in css
   const site_css = obj.css;
   const fixed_css = site_css.replace(/http\:\/\/undefined\/\w+\//g, "../images/");
-
-  fs.writeFile("public/css/{}".format(obj.cssFileName), fixed_css, function(err) {
-    if(err) {
-        return console.log(err);
-    }
-    console.log("The file was saved!");
-   }); 
-  fs.writeFile("public/css/normalize.css", obj.cssNormalize, function(err) {
-    if(err) {
-        return console.log(err);
-    }
-    console.log("The file was saved!");
-   }); 
+  writeFile("public/css/{}".format(obj.cssFileName), fixed_css);
+  writeFile("public/css/normalize.css", obj.cssNormalize); 
 
   // write the js
-  fs.writeFile("public/js/{}".format(obj.siteJsFileName), obj.siteJs, function(err) {
-    if(err) {
-        return console.log(err);
-    }
-    console.log("The file was saved!");
-   }); 
-});
+  writeFile("public/js/{}".format(obj.siteJsFileName), obj.siteJs);
+  });
