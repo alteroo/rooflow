@@ -36,7 +36,7 @@ async function run() {
   await page.screenshot({ path: 'screenshots/loginpage.png' });
 
   // Log in with credentials
-  const [gotologinpage] = await Promise.all([
+  const [logintosite] = await Promise.all([
       page.waitForNavigation(), 
       page.click(USERNAME_),
       page.keyboard.type(CREDS.username),
