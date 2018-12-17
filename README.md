@@ -1,3 +1,2 @@
-# hugo-and-firebase
-docker image that ships with hugo and firebase-cli
+docker image that ships with rooflow utility
 # rooflow
