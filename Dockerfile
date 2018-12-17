@@ -1,12 +1,42 @@
-FROM node:8.14.0-alpine
+FROM node:9-alpine
 
-COPY ./hopeflow hopeflow
+# Installs latest Chromium (63) package.
+RUN apk update && apk upgrade && \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
+    apk add --no-cache \
+      chromium@edge \
+      nss@edge
 
-# Download hugo
-# no more ADD, hopefully reduce the docker layers
-# ADD https://github.com/spf13/hugo/releases/download/v${HUGO_VERSION}/${HUGO_TARBALL_NAME}.tar.gz /usr/local/
-# install firebase-tools and hugo in one command, makes for a smaller image
-# according to https://semaphoreci.com/blog/2016/12/13/lightweight-docker-images-in-5-steps.html
+# Help prevent zombie chrome processes
+ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
+RUN chmod +x /usr/local/bin/dumb-init
+
+COPY . /app/
+WORKDIR app
+
+# Install deps for server.
+RUN yarn
+
+# Skip downloading Chromium when installing puppeteer. We'll use the installed package.
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+
+# Use Puppeteer 0.11.0 b/c it bundles Chromium 63.
+RUN yarn add puppeteer@0.11.0
+
+RUN addgroup -S pptruser && adduser -S -g pptruser pptruser \
+    && mkdir -p /home/pptruser/Downloads \
+    && chown -R pptruser:pptruser /home/pptruser \
+    && chown -R pptruser:pptruser /app
+
+# Run user as non privileged.
+USER pptruser
+
+EXPOSE 8080
+
+ENTRYPOINT ["dumb-init", "--"]
+CMD ["yarn", "start"]
+
 RUN cd hopeflow \
     && apk add --update ca-certificates wget \
     && update-ca-certificates \
