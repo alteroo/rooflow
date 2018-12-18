@@ -35,7 +35,15 @@ async function run() {
 
   // await page.screenshot({ path: 'screenshots/loginpage.png' });
 
+     await page.waitFor(30000);
+     await page.click(USERNAME_);
+     await page.keyboard.type(CREDS.username);
+     await page.click(PASSWORD_);
+     await page.keyboard.type(CREDS.password);
+     await page.click(SUBMIT_);
+     await page.waitForNavigation(); 
   // Log in with credentials
+/*
   const [logintosite] = await Promise.all([
       // waith an extra 30 seconds before waiting for navigation
       page.waitFor(30000),
@@ -46,7 +54,7 @@ async function run() {
       page.keyboard.type(CREDS.password),
       page.click(SUBMIT_),
             ]);
-  /* await page.click(USERNAME_)
+   await page.click(USERNAME_)
   await page.keyboard.type(CREDS.username)
   await page.click(PASSWORD_)
   await page.keyboard.type(CREDS.password)
